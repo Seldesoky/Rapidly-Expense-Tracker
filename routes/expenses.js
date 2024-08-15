@@ -27,11 +27,13 @@ router.get('/new', isAuthenticated, (req, res) => {
 
 // Create a new expense
 router.post('/', isAuthenticated, async (req, res) => {
-  const { description, amount } = req.body;
+  const { description, amount, date, category } = req.body;
   try {
     const expense = new Expense({
       description,
       amount,
+      date,
+      category,
       author: req.user._id,
     });
     await expense.save();
@@ -81,12 +83,7 @@ router.put('/:id', isAuthenticated, async (req, res) => {
 // Delete an expense
 router.delete('/:id', isAuthenticated, async (req, res) => {
   try {
-    const expense = await Expense.findById(req.params.id);
-    if (!expense || !expense.author.equals(req.user._id)) {
-      req.flash('error', 'You do not have permission to delete this expense.');
-      return res.redirect('/expenses');
-    }
-    await expense.remove();
+    await Expense.findByIdAndDelete(req.params.id);
     req.flash('success', 'Expense deleted successfully.');
     res.redirect('/expenses');
   } catch (err) {

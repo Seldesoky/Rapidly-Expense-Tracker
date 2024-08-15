@@ -6,10 +6,18 @@
 <body>
     <h1>Edit Expense</h1>
     <form action="/expenses/<%= expense._id %>?_method=PUT" method="POST">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="<%= expense.date.toISOString().substring(0, 10) %>" required>
+        
         <label for="description">Description:</label>
         <input type="text" id="description" name="description" value="<%= expense.description %>" required>
+        
         <label for="amount">Amount:</label>
         <input type="number" id="amount" name="amount" value="<%= expense.amount %>" required>
+        
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" value="<%= expense.category %>" required>
+        
         <button type="submit">Update Expense</button>
     </form>
     <a href="/expenses">Back to Dashboard</a>

@@ -18,9 +18,10 @@ mongoose.connect(process.env.MONGODB_URI)
 .catch(err => console.error('MongoDB connection error:', err));
 
 // Middleware
+app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
+
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secret',

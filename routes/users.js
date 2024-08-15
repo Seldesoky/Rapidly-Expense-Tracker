@@ -15,7 +15,7 @@ router.post('/register', async (req, res) => {
     const user = new User({ username });
     await User.register(user, password);
     req.flash('success', 'Registration successful. Please log in.');
-    res.redirect('/users/login');
+    res.redirect('/');
   } catch (err) {
     req.flash('error', 'Error registering user.');
     res.redirect('/users/register');
@@ -36,9 +36,14 @@ router.post('/login', passport.authenticate('local', {
 
 // Log out a user
 router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('success', 'Logged out successfully.');
-  res.redirect('/users/login');
+  req.logout((err) => {
+    if (err) {
+      req.flash('error', 'Error logging out.');
+      return res.redirect('/expenses');
+    }
+    req.flash('success', 'Logged out successfully.');
+    res.redirect('/');
+  });
 });
 
 module.exports = router;
