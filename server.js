@@ -57,8 +57,8 @@ const expenseRoutes = require('./routes/expenses');
 const statisticsRoutes = require('./routes/statistics');
 
 app.use('/users', userRoutes);
-app.use('/expenses', isAuthenticated, expenseRoutes);  // Apply the middleware
-app.use('/statistics', isAuthenticated, statisticsRoutes);  // Apply the middleware
+app.use('/expenses', isAuthenticated, expenseRoutes); 
+app.use('/statistics', isAuthenticated, statisticsRoutes); 
 
 // Set view engine to EJS
 app.set('view engine', 'ejs');
