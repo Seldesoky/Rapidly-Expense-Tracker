@@ -2,10 +2,43 @@
 <html>
 <head>
     <title>Statistics</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
+    <nav>
+      <ul>
+        <li><a href="/expenses">Dashboard</a></li>
+        <li><a href="/expenses/new">Add New Expense</a></li>
+        <li><a href="/statistics">Statistics</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      </ul>
+    </nav>
+
     <h1>Expense Statistics</h1>
-    <!-- Place holder for statisics -->
+
+    <h2>Total Expenses by Month and Year</h2>
+    <ul>
+      <% for (let monthYear in monthlyTotals) { %>
+        <li><%= monthYear %>: $<%= monthlyTotals[monthYear].toFixed(2) %></li>
+      <% } %>
+    </ul>
+
+    <h2>Category Breakdown</h2>
+    <ul>
+      <% for (let category in categoryBreakdown) { %>
+        <li><%= category %>: $<%= categoryBreakdown[category].toFixed(2) %></li>
+      <% } %>
+    </ul>
+
+    <h2>Highest Expense</h2>
+    <p><%= highestExpense.description %>: $<%= highestExpense.amount.toFixed(2) %> on <%= highestExpense.date.toLocaleDateString() %></p>
+
+    <h2>Lowest Expense</h2>
+    <p><%= lowestExpense.description %>: $<%= lowestExpense.amount.toFixed(2) %> on <%= lowestExpense.date.toLocaleDateString() %></p>
+
+    <h2>Average Spending Per Month</h2>
+    <p>$<%= averageSpendingPerMonth.toFixed(2) %></p>
+
     <a href="/expenses">Back to Dashboard</a>
 </body>
 </html>

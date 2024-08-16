@@ -2,10 +2,18 @@
 <html>
 <head>
     <title>Dashboard</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <a href="/expenses/new">Add New Expense</a>
+    <nav>
+      <ul>
+        <li><a href="/expenses">Dashboard</a></li>
+        <li><a href="/expenses/new">Add New Expense</a></li>
+        <li><a href="/statistics">Statistics</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      </ul>
+    </nav>
+
     <table>
         <thead>
             <tr>
@@ -19,13 +27,13 @@
         <tbody>
             <% expenses.forEach(expense => { %>
                 <tr>
-                    <td><%= expense.date.toDateString() %></td>
+                    <td><%= expense.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></td>
                     <td><%= expense.description %></td>
                     <td><%= expense.amount %></td>
                     <td><%= expense.category %></td>
                     <td>
                         <a href="/expenses/<%= expense._id %>/edit">Edit</a>
-                        <form action="/expenses/<%= expense._id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <form action="/expenses/<%= expense._id %>?_method=DELETE" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this expense?');">
                             <button type="submit">Delete</button>
                         </form>
                     </td>
@@ -33,6 +41,5 @@
             <% }) %>
         </tbody>
     </table>
-    <a href="/users/logout">Logout</a>
 </body>
 </html>

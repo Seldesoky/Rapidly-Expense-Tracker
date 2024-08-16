@@ -1,18 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Expense = require('../models/Expense');
-
-// Middleware to check if user is authenticated
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  req.flash('error', 'You need to be logged in to access this page.');
-  res.redirect('/users/login');
-}
+const isAuthenticated = require('../middleware/auth');
 
 // Show all expenses
 router.get('/', isAuthenticated, async (req, res) => {
   try {
-    const expenses = await Expense.find({ author: req.user._id });
+    const expenses = await Expense.find({ author: req.user._id }).sort({ date: -1 });
     res.render('dashboard', { expenses });
   } catch (err) {
     req.flash('error', 'Could not retrieve expenses.');
@@ -27,12 +21,15 @@ router.get('/new', isAuthenticated, (req, res) => {
 
 // Create a new expense
 router.post('/', isAuthenticated, async (req, res) => {
-  const { description, amount, date, category } = req.body;
   try {
+    const { description, amount, date, category } = req.body;
+    const adjustedDate = new Date(date);
+    adjustedDate.setMinutes(adjustedDate.getMinutes() + adjustedDate.getTimezoneOffset());
+
     const expense = new Expense({
       description,
       amount,
-      date,
+      date: adjustedDate,
       category,
       author: req.user._id,
     });
@@ -63,15 +60,23 @@ router.get('/:id/edit', isAuthenticated, async (req, res) => {
 // Update an expense
 router.put('/:id', isAuthenticated, async (req, res) => {
   try {
-    const { description, amount } = req.body;
+    const { description, amount, date, category } = req.body;
     const expense = await Expense.findById(req.params.id);
+    
     if (!expense || !expense.author.equals(req.user._id)) {
       req.flash('error', 'You do not have permission to update this expense.');
       return res.redirect('/expenses');
     }
+
+    const adjustedDate = new Date(date);
+    adjustedDate.setMinutes(adjustedDate.getMinutes() + adjustedDate.getTimezoneOffset());
+
     expense.description = description;
     expense.amount = amount;
+    expense.date = adjustedDate;
+    expense.category = category;
     await expense.save();
+
     req.flash('success', 'Expense updated successfully.');
     res.redirect('/expenses');
   } catch (err) {

@@ -4,7 +4,7 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Welcome to Rapidly </h1>
+    <h1>Welcome to Rapidly</h1>
     <h2>Your favorite Expense Tracker</h2>
     <form action="/users/login" method="POST">
         <label for="username">Username:</label>
@@ -13,6 +13,11 @@
         <input type="password" id="password" name="password" required>
         <button type="submit">Login</button>
     </form>
+    
+    <% if (messages.error) { %>
+        <div class="alert alert-danger"><%= messages.error %></div>
+    <% } %>
+
     <p>Don't have an account? <a href="/users/register">Register here</a>.</p>
 </body>
 </html>
