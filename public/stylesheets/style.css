@@ -7,35 +7,50 @@
 
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
     line-height: 1.6;
     padding: 20px;
-    background-color: #f4f4f4;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h1, h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 /* Navigation Bar */
 nav {
     background-color: #333;
-    padding: 10px;
+    padding: 10px 0;
 }
 
 nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
-    padding: 0;
     margin: 0;
 }
 
 nav ul li {
     margin: 0 15px;
-    padding: 0;
 }
 
 nav ul li a {
     color: #fff;
     text-decoration: none;
     padding: 10px 15px;
-    display: inline-block;
 }
 
 nav ul li a:hover {
@@ -43,23 +58,19 @@ nav ul li a:hover {
     border-radius: 5px;
 }
 
-/* Headings */
-h1, h2 {
-    color: #333;
-    margin-bottom: 15px;
+/* Form Styles */
+form {
+    margin-top: 20px;
 }
 
-/* Form Styling */
-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.form-group {
+    margin-bottom: 15px;
 }
 
 label {
     display: block;
-    margin: 10px 0 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 input[type="text"],
@@ -67,38 +78,47 @@ input[type="password"],
 input[type="number"],
 input[type="date"] {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 button {
+    width: 100%;
+    padding: 10px;
     background-color: #28a745;
     color: #fff;
     border: none;
-    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
     background-color: #218838;
 }
 
+/* Link Styles */
 a {
     color: #007bff;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-top: 15px;
 }
 
 a:hover {
     color: #0056b3;
 }
 
-/* Table Styling */
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
@@ -109,10 +129,81 @@ th, td {
 
 th {
     background-color: #333;
-    color: white;
+    color: #fff;
 }
 
 tr:hover {
     background-color: #f1f1f1;
 }
 
+/* Alert Styles */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Statistics Page Specific Styling */
+.statistics-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.statistics-container h2 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #333;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.statistics-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.statistics-container ul li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+    border-left: 5px solid #333;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.statistics-container ul li:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+
+.statistics-container p {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 5px solid #333;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.statistics-container p span {
+    font-weight: bold;
+    color: #333;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto -100px auto;
+    text-align: center;
+}
+
+  

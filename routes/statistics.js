@@ -2,7 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Expense = require('../models/Expense');
 const moment = require('moment');
-const isAuthenticated = require('../middleware/auth'); 
+
+// Middleware to check if user is authenticated
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  req.flash('error', 'You need to be logged in to access this page.');
+  res.redirect('/users/login');
+}
 
 // Show expense statistics at /statistics
 router.get('/', isAuthenticated, async (req, res) => {
@@ -18,12 +24,24 @@ router.get('/', isAuthenticated, async (req, res) => {
       return acc;
     }, {});
 
-    // Calculate total by month and year
-    const monthlyTotals = expenses.reduce((acc, expense) => {
-      const monthYear = moment(expense.date).format('MMMM YYYY');
-      acc[monthYear] = (acc[monthYear] || 0) + expense.amount;
-      return acc;
-    }, {});
+    // Group by month/year and sum amounts
+    const monthlyTotals = {};
+    const yearlyTotals = {};
+
+    expenses.forEach(expense => {
+      const monthYear = moment(expense.date).format('MMM YYYY'); // e.g., "Jan 2023"
+      const year = moment(expense.date).format('YYYY'); // e.g., "2023"
+
+      if (!monthlyTotals[monthYear]) {
+        monthlyTotals[monthYear] = 0;
+      }
+      if (!yearlyTotals[year]) {
+        yearlyTotals[year] = 0;
+      }
+
+      monthlyTotals[monthYear] += expense.amount;
+      yearlyTotals[year] += expense.amount;
+    });
 
     // Calculate average spending per month
     const numberOfMonths = Object.keys(monthlyTotals).length;
@@ -35,10 +53,11 @@ router.get('/', isAuthenticated, async (req, res) => {
       highestExpense: expenses.length ? expenses.reduce((max, expense) => (expense.amount > max.amount ? expense : max), expenses[0]) : null,
       lowestExpense: expenses.length ? expenses.reduce((min, expense) => (expense.amount < min.amount ? expense : min), expenses[0]) : null,
       averageSpendingPerMonth,
-      monthlyTotals
+      monthlyTotals,
+      yearlyTotals
     });
   } catch (err) {
-    console.error('Error retrieving statistics:', err); 
+    console.error('Error retrieving statistics:', err); // Log the error for debugging
     req.flash('error', 'Could not retrieve statistics.');
     res.redirect('/expenses');
   }
