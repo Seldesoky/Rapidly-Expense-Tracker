@@ -38,11 +38,15 @@
             <% } %>
         </ul>
 
-        <h2>Highest Expense</h2>
-        <p><span><%= highestExpense.description %></span><span>$<%= highestExpense.amount.toFixed(2) %> on <%= highestExpense.date.toLocaleDateString() %></span></p>
+        <% if (highestExpense) { %>
+            <h2>Highest Expense</h2>
+            <p><span><%= highestExpense.description %></span><span>$<%= highestExpense.amount.toFixed(2) %> on <%= highestExpense.date.toLocaleDateString() %></span></p>
+        <% } %>
 
-        <h2>Lowest Expense</h2>
-        <p><span><%= lowestExpense.description %></span><span>$<%= lowestExpense.amount.toFixed(2) %> on <%= lowestExpense.date.toLocaleDateString() %></span></p>
+        <% if (lowestExpense) { %>
+            <h2>Lowest Expense</h2>
+            <p><span><%= lowestExpense.description %></span><span>$<%= lowestExpense.amount.toFixed(2) %> on <%= lowestExpense.date.toLocaleDateString() %></span></p>
+        <% } %>
 
         <h2>Average Spending Per Month</h2>
         <p><span>Average:</span><span>$<%= averageSpendingPerMonth.toFixed(2) %></span></p>
