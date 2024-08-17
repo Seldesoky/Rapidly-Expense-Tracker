@@ -29,8 +29,8 @@ router.get('/', isAuthenticated, async (req, res) => {
     const yearlyTotals = {};
 
     expenses.forEach(expense => {
-      const monthYear = moment(expense.date).format('MMM YYYY'); // e.g., "Jan 2023"
-      const year = moment(expense.date).format('YYYY'); // e.g., "2023"
+      const monthYear = moment(expense.date).format('MMM YYYY');
+      const year = moment(expense.date).format('YYYY'); 
 
       if (!monthlyTotals[monthYear]) {
         monthlyTotals[monthYear] = 0;
@@ -57,7 +57,7 @@ router.get('/', isAuthenticated, async (req, res) => {
       yearlyTotals
     });
   } catch (err) {
-    console.error('Error retrieving statistics:', err); // Log the error for debugging
+    console.error('Error retrieving statistics:', err); 
     req.flash('error', 'Could not retrieve statistics.');
     res.redirect('/expenses');
   }
