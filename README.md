@@ -24,6 +24,9 @@ Rapidly is an easy-to-use Expense Tracker application that helps you manage and 
 ## Deployment
 //TBD//
 
+## Version
+V.01
+
 ## Next Steps
 - Statistical graphs
 - Ability to extract expense data to excel files
