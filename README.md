@@ -23,3 +23,9 @@ Rapidly is an easy-to-use Expense Tracker application that helps you manage and 
 
 ## Deployment
 //TBD//
+
+## Next Steps
+- Statistical graphs
+- Ability to extract expense data to excel files
+- Allow user to add income to be able to track net income
+- Rest password functionality

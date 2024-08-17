@@ -7,12 +7,13 @@ const isAuthenticated = require('../middleware/auth');
 router.get('/', isAuthenticated, async (req, res) => {
   try {
     const expenses = await Expense.find({ author: req.user._id }).sort({ date: -1 });
-    res.render('dashboard', { expenses });
+    res.render('dashboard', { expenses, user: req.user });
   } catch (err) {
     req.flash('error', 'Could not retrieve expenses.');
     res.redirect('/');
   }
 });
+
 
 // Show form to create a new expense
 router.get('/new', isAuthenticated, (req, res) => {

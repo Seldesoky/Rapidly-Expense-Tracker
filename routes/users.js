@@ -11,13 +11,19 @@ router.get('/register', (req, res) => {
 // Register a new user
 router.post('/register', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = new User({ username });
+    const { firstName, lastName, email, username, password } = req.body;
+    const user = new User({ firstName, lastName, email, username });
     await User.register(user, password);
     req.flash('success', 'Registration successful. Please log in.');
     res.redirect('/');
   } catch (err) {
-    req.flash('error', 'Error registering user.');
+    if (err.name === 'UserExistsError') {
+      req.flash('error', 'Username already exists, please try a different one.');
+    } else if (err.code === 11000) { 
+      req.flash('error', 'Email is already registered.');
+    } else {
+      req.flash('error', 'Error registering user.');
+    }
     res.redirect('/users/register');
   }
 });
